@@ -1,0 +1,158 @@
+@name Zenith PITCH Meters
+@inputs E:wirelink PropReference:wirelink
+@outputs Pitch
+@persist Pitch Roll Facing Text Angle1 Angle2 Angle3 Angle4 Angle5 X
+
+if (first()) { 
+
+X=0
+
+X++
+E:egpBox(X,vec2(0,0),vec2(1024,1024))
+E:egpColor(X,vec(165,35,3))
+X++
+E:egpCircle(X,vec2(256,256),vec2(254,254))
+E:egpColor(X,vec(255,255,255))
+X++
+E:egpCircle(X,vec2(256,256),vec2(250,250))
+E:egpColor(X,vec())
+X++
+E:egpLine(X,vec2(115,256),vec2(395,256))
+E:egpColor(X,vec(0,255,0))
+X++
+E:egpLine(X,vec2(256,395),vec2(256,115))
+E:egpColor(X,vec(0,255,0))
+X++
+E:egpTextLayout(X,"PITCH",vec2(380,-7),vec2(300,80))
+E:egpSize(X,50)
+E:egpColor(X,vec())
+
+J=0 #A number used to check if the object should be made extra large
+
+#Create all the numbers and lines
+for(I=-90,90,5) 
+{
+    J++
+    
+    #For making every third element slightly larger
+    IsThird = (J%2) == 0
+        
+    #Calculate angle for position
+    Angle = I/180*180
+    
+    #Give the larger texts a little offset
+    Offset = 0
+    if (IsThird) 
+    {
+        if (I < 100) {Offset = 32} 
+        else {Offset = 5}
+    }
+    Pos = vec2(256,256) + vec2(226-Offset,0):rotate(Angle)
+    
+    #Create text
+    X++
+    if (I == -360 || I == 0) {E:egpText(X,"0",Pos)}
+    else {E:egpText(X,""+-I,Pos)}
+    E:egpAlign(X,1,1)
+    E:egpSize(X,( IsThird ? 15 : 25 ))
+    E:egpColor(X,vec(0,120,0))
+    
+    #Create line
+    X++
+    LinePos1 = vec2(256,256) + vec2(150,0):rotate(Angle)
+    LinePos2 = vec2(256,256) + vec2(190 + (!IsThird ? 15 : -10),0):rotate(Angle)
+    E:egpLine(X,LinePos1,LinePos2)
+    E:egpSize(X,(IsThird ? 1 : 5))
+    E:egpColor(X,vec(0,120,0))
+}
+
+K=0 #A number used to check if the object should be made extra large
+
+#Create all the numbers and lines
+for(L=-90,90,5) 
+{
+    K++
+    
+    #For making every third element slightly larger
+    IsSecond = (K%2) == 0
+        
+    #Calculate angle for position
+    Angles = L/-180*180
+    
+    #Give the larger texts a little offset
+    Offsets = 0
+    if (IsSecond) 
+    {
+        if (L < 100) {Offsets = 32} 
+        else {Offsets = 5}
+    }
+    Poss = vec2(256,256) + vec2(226-Offsets,0):rotate(Angles+180)
+    
+    #Create text
+    X++
+    if (L == -90 || L == 90) {E:egpText(X,"",Poss)}
+    if (L == 0) {E:egpText(X,"0",Poss)}
+    else {E:egpText(X,""+-L,Poss)}
+    E:egpAlign(X,1,1)
+    E:egpSize(X,( IsSecond ? 15 : 25 ))
+    E:egpColor(X,vec(0,120,0))
+    
+    #Create line
+    X++
+    LinePos11 = vec2(256,256) - vec2(150,0):rotate(Angles)
+    LinePos22 = vec2(256,256) - vec2(186 + (!IsSecond ? 15 : -10),0):rotate(Angles)
+    E:egpLine(X,LinePos11,LinePos22)
+    E:egpSize(X,(IsSecond ? 1 : 5))
+    E:egpColor(X,vec(0,120,0))
+}
+
+
+X++
+Text = X
+if (Pitch <= 0) { Offsett = 5 } else { Offsett = 0}
+if (Pitch == 0) { E:egpTextLayout(X,""+Pitch,vec2(5+Offsett,5),vec2(150,60))}
+else {E:egpTextLayout(X,""+Pitch*(-1),vec2(5+Offsett,5),vec2(150,60)) }
+E:egpSize(X,60)
+E:egpColor(X,vec())
+X++
+Angle1 = X
+E:egpRoundedBox(X,vec2(150,256),vec2(200,50))
+E:egpColor(X,60,60,60,255)
+X++
+Angle2 = X 
+E:egpRoundedBoxOutline(X,vec2(256,256),vec2(425,50))
+E:egpColor(X,60,60,60,255)
+E:egpSize(X,5)
+X++
+Angle3 = X
+E:egpRoundedBox(X,vec2(256,256),vec2(115,2))
+E:egpColor(X,255,255,0,255)
+X++
+Angle4 = X
+E:egpRoundedBox(X,vec2(80,256),vec2(100,80))
+E:egpColor(X,vec(60,60,60))
+X++
+Angle5 = X
+E:egpRoundedBox(X,vec2(256,256),vec2(230,75))
+E:egpColor(X,vec(60,60,60))
+}
+
+interval(100)
+
+Pitch = PropReference:entity():angles():pitch()
+Pitch = -ceil(Pitch)
+Roll = PropReference:entity():angles():roll()
+Roll = -ceil(Roll)
+
+if (Pitch < 0 || Pitch > 0) {Multi = -1} if (Pitch == 0) {Multi = -1}
+E:egpSetText(Text,""+Pitch*(Multi))
+
+if ((Roll <= -90 && Roll >= -180) || (Roll <= 180 && Roll >= 90)) 
+{Facing = -1}
+else {Facing = 1}
+
+E:egpAngle(Angle1,vec2(256,256),vec2(-117*Facing,0),-Pitch*Facing)
+E:egpAngle(Angle2,-Pitch*Facing)
+E:egpAngle(Angle3,vec2(256,256),vec2(175*Facing,0),-Pitch*Facing)
+E:egpAngle(Angle4,vec2(256,256),vec2(-155*Facing,0),-Pitch*Facing)
+E:egpAngle(Angle5,vec2(256,256),vec2(30*Facing,0),-Pitch*Facing)
