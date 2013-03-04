@@ -1,0 +1,179 @@
+@name ZenithLifeSupportConsole
+@inputs EON OXON NION HYON WATON C0ON CLON WKey AKey SKey DKey RKey SPACEKey AltKey L:wirelink R:wirelink ENERGY OXYGEN NITROGEN HYDROGEN WATER C02 MAXENERGY MAXOXYGEN MAXNITROGEN MAXHYDROGEN MAXWATER MAXC02
+@outputs ENERGYON OXYON NITROON HYDROON WATERON C02ON CLIMATEON
+@persist TEXT1 TEXT2 TEXT3 TEXT4 TEXT5 TEXT6 TEXT7 TEXT8 TEXT9 TEXT10 TEXT11 TEXT12 CIRCLE1 CIRCLE2 CIRCLE3 CIRCLE4 CIRCLE5 CIRCLE6 CIRCLE7
+
+L:egpDrawTopLeft(1) 
+if (first())
+{
+#LEFT SCREEN#
+X=0
+X++
+L:egpBox(X,vec2(),vec2(520,520)) 
+L:egpColor(X,vec(30,30,30))
+X++
+L:egpBox(X,vec2(35,25),vec2(15,440)) 
+L:egpColor(X,vec(100,100,100))
+X++
+L:egpBox(X,vec2(34,460),vec2(470,15)) 
+L:egpColor(X,vec(100,100,100))
+X++
+TEXT1 = X
+L:egpBox(X,vec2(122,459),vec2(60,100)) L:egpAngle(X,180) L:egpColor(X,vec(120,0,0))
+X++
+TEXT2 = X
+L:egpBox(X,vec2(122+75,459),vec2(60,100)) L:egpAngle(X,180) L:egpColor(X,vec(120,120,0))
+X++
+TEXT3 = X
+L:egpBox(X,vec2(122+75*2,459),vec2(60,100)) L:egpAngle(X,180) L:egpColor(X,vec(0,120,0))
+X++
+TEXT4 = X
+L:egpBox(X,vec2(122+75*3,459),vec2(60,100)) L:egpAngle(X,180) L:egpColor(X,vec(120,120,120))
+X++
+TEXT5 = X
+L:egpBox(X,vec2(122+75*4,459),vec2(60,100)) L:egpAngle(X,180) L:egpColor(X,vec(0,0,120))
+X++
+TEXT6 = X
+L:egpBox(X,vec2(122+75*5,459),vec2(60,100)) L:egpAngle(X,180) L:egpColor(X,vec(60,60,220))
+X++
+L:egpLine(X,vec2(49,245),vec2(504,245)) L:egpColor(X,vec(100,100,100)) L:egpSize(X,3)
+X++
+L:egpLine(X,vec2(49,135),vec2(504,135)) L:egpColor(X,vec(100,100,100)) L:egpSize(X,3)
+X++
+L:egpLine(X,vec2(49,355),vec2(504,355)) L:egpColor(X,vec(100,100,100)) L:egpSize(X,3)
+X++
+L:egpLine(X,vec2(49,28),vec2(504,28)) L:egpColor(X,vec(100,100,100)) L:egpSize(X,3)
+X++
+L:egpLine(X,vec2(49,410),vec2(504,410)) L:egpColor(X,vec(100,100,100))
+X++
+L:egpLine(X,vec2(49,300),vec2(504,300)) L:egpColor(X,vec(100,100,100))
+X++
+L:egpLine(X,vec2(49,190),vec2(504,190)) L:egpColor(X,vec(100,100,100))
+X++
+L:egpLine(X,vec2(49,80),vec2(504,80)) L:egpColor(X,vec(100,100,100))
+X++
+L:egpText(X,"25",vec2(1,340)) L:egpColor(X,vec(100,100,100)) L:egpSize(X,30)
+X++
+L:egpText(X,"50",vec2(1,230)) L:egpColor(X,vec(100,100,100)) L:egpSize(X,30)
+X++
+L:egpText(X,"75",vec2(1,120)) L:egpColor(X,vec(100,100,100)) L:egpSize(X,30)
+X++
+L:egpText(X,"100",vec2(1,21)) L:egpColor(X,vec(100,100,100)) L:egpSize(X,22)
+X++
+L:egpText(X,"12.5",vec2(2,400)) L:egpColor(X,vec(100,100,100)) L:egpSize(X,17)
+X++
+L:egpText(X,"37.5",vec2(2,290)) L:egpColor(X,vec(100,100,100)) L:egpSize(X,17)
+X++
+L:egpText(X,"62.5",vec2(2,180)) L:egpColor(X,vec(100,100,100)) L:egpSize(X,17)
+X++
+L:egpText(X,"87.5",vec2(2,70)) L:egpColor(X,vec(100,100,100)) L:egpSize(X,17)
+X++
+L:egpText(X,"ENERGY",vec2(55,475)) L:egpColor(X,vec(120,0,0)) L:egpSize(X,22)
+X++
+L:egpText(X,"OXYGEN",vec2(130,475)) L:egpColor(X,vec(120,120,0)) L:egpSize(X,22)
+X++
+L:egpText(X,"NITRO",vec2(212,475)) L:egpColor(X,vec(0,120,0)) L:egpSize(X,22)
+X++
+L:egpText(X,"HYDRO",vec2(284,475)) L:egpColor(X,vec(120,120,120)) L:egpSize(X,22)
+X++
+L:egpText(X,"WATER",vec2(359,475)) L:egpColor(X,vec(0,0,120)) L:egpSize(X,22)
+X++
+L:egpText(X,"C02",vec2(447,475)) L:egpColor(X,vec(60,60,220)) L:egpSize(X,22)
+#RIGHT SCREEN#
+R:egpDrawTopLeft(1) 
+Y=0
+Y++
+R:egpBox(Y,vec2(),vec2(520,520)) R:egpColor(Y,vec(30,30,30))
+
+Y++ CIRCLE1 = Y R:egpCircle(Y,vec2(41,40),vec2(25,25)) R:egpFidelity(Y,6)
+Y++ CIRCLE2 = Y R:egpCircle(Y,vec2(41,112),vec2(25,25)) R:egpFidelity(Y,6)
+Y++ CIRCLE3 = Y R:egpCircle(Y,vec2(41,184),vec2(25,25)) R:egpFidelity(Y,6)
+Y++ CIRCLE4 = Y R:egpCircle(Y,vec2(41,256),vec2(25,25)) R:egpFidelity(Y,6)
+Y++ CIRCLE5 = Y R:egpCircle(Y,vec2(41,328),vec2(25,25)) R:egpFidelity(Y,6)
+Y++ CIRCLE6 = Y R:egpCircle(Y,vec2(41,400),vec2(25,25)) R:egpFidelity(Y,6)
+Y++ CIRCLE7 = Y R:egpCircle(Y,vec2(41,472),vec2(25,25)) R:egpFidelity(Y,6)
+
+K=0 P=0
+for(I=0,6,1)
+{
+Y++
+R:egpCircleOutline(Y,vec2(41,40+K),vec2(30,30)) R:egpColor(Y,vec())
+R:egpSize(Y,7) R:egpFidelity(Y,6)
+Y++
+if(I==0){N = "ENERGY:"} if(I==1){N="OXYGEN:"} if(I==2){N="NITROGEN:"}
+if(I==3){N = "HYDROGEN:"} if(I==4){N="WATER:"} if(I==5){N="C02:"} if(I==6){N="ENVIRONMENTAL"} 
+R:egpText(Y,""+N,vec2(80,17+K)) R:egpSize(Y,40)
+K=K+72
+}
+Y++
+TEXT7 = Y
+R:egpText(Y,""+round(ENERGY),vec2(240,17)) R:egpSize(Y,40)
+Y++
+TEXT8 = Y
+R:egpText(Y,""+round(OXYGEN),vec2(250,89)) R:egpSize(Y,40)
+Y++
+TEXT9 = Y
+R:egpText(Y,""+round(NITROGEN),vec2(280,161)) R:egpSize(Y,40)
+Y++
+TEXT10 = Y
+R:egpText(Y,""+round(HYDROGEN),vec2(300,233)) R:egpSize(Y,40)
+Y++
+TEXT11 = Y
+R:egpText(Y,""+round(WATER),vec2(230,305)) R:egpSize(Y,40)
+Y++
+TEXT12 = Y
+R:egpText(Y,""+round(C02),vec2(170,377)) R:egpSize(Y,40)
+}
+
+interval(300)
+
+if (~WKey & WKey ) 
+{ENERGYON = !ENERGYON} 
+if (~AKey & AKey) 
+{OXYON = !OXYON}
+if (~SKey & SKey ) 
+{NITROON = !NITROON}
+if (~DKey & DKey ) 
+{HYDROON = !HYDROON}
+if (~RKey & RKey ) 
+{WATERON = !WATERON}
+if (~SPACEKey & SPACEKey) 
+{C02ON = !C02ON}
+if (~AltKey & AltKey ) 
+{CLIMATEON = !CLIMATEON}
+
+if (EON == 1) {R:egpColor(CIRCLE1,vec(0,255,0))} else{R:egpColor(CIRCLE1,vec(255,0,0))}
+if (OXON == 1) {R:egpColor(CIRCLE2,vec(0,255,0))} else{R:egpColor(CIRCLE2,vec(255,0,0))}
+if (NION == 1) {R:egpColor(CIRCLE3,vec(0,255,0))} else{R:egpColor(CIRCLE3,vec(255,0,0))}
+if (HYON == 1) {R:egpColor(CIRCLE4,vec(0,255,0))} else{R:egpColor(CIRCLE4,vec(255,0,0))}
+if (WATON == 1) {R:egpColor(CIRCLE5,vec(0,255,0))} else{R:egpColor(CIRCLE5,vec(255,0,0))}
+if (C0ON == 1) {R:egpColor(CIRCLE6,vec(0,255,0))} else{R:egpColor(CIRCLE6,vec(255,0,0))}
+if (CLON == 1) {R:egpColor(CIRCLE7,vec(0,255,0))} else{R:egpColor(CIRCLE7,vec(255,0,0))}
+
+ENERGY1 = round((ENERGY/MAXENERGY)*100)
+OXYGEN1 = floor((OXYGEN/MAXOXYGEN)*100)
+NITROGEN1 = floor((NITROGEN/MAXNITROGEN)*100)
+HYDROGEN1 = floor((HYDROGEN/MAXHYDROGEN)*100)
+WATER1 = floor((WATER/MAXWATER)*100)
+C021 = floor((C02/MAXC02)*100)
+
+T1L = (430*ENERGY1)/100
+T2L = (430*OXYGEN1)/100
+T3L = (430*NITROGEN1)/100
+T4L = (430*HYDROGEN1)/100
+T5L = (430*WATER1)/100
+T6L = (430*C021)/100 
+
+L:egpSize(TEXT1,vec2(60,T1L))
+L:egpSize(TEXT2,vec2(60,T2L))
+L:egpSize(TEXT3,vec2(60,T3L))
+L:egpSize(TEXT4,vec2(60,T4L))
+L:egpSize(TEXT5,vec2(60,T5L))
+L:egpSize(TEXT6,vec2(60,T6L))
+
+R:egpSetText(TEXT7,""+round(ENERGY))
+R:egpSetText(TEXT8,""+round(OXYGEN))
+R:egpSetText(TEXT9,""+round(NITROGEN))
+R:egpSetText(TEXT10,""+round(HYDROGEN))
+R:egpSetText(TEXT11,""+round(WATER))
+R:egpSetText(TEXT12,""+round(C02))
