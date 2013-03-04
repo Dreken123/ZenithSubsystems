@@ -1,0 +1,337 @@
+@name ZenithTatcialWeaponsStation
+@inputs W E:wirelink T:wirelink PITCH ELEV BEARING DIST A D YAW GOTTARGET XPOS YPOS TXPOS TYPOS LASER1 LASER2 MOUSE1 MOUSE2 SHIELDSTR R CLOAKING SPACE SHIELDING ENERGY HEALTH MAXHEALTH ROCKET1 ROCKET2 ROCKET3 ROCKET4 ROCKET5 ROCKET6
+@outputs NEXTTARGET CLOAKONOFF ONOFF FIREMISSLES FIRELASER LASERON
+@persist W NEXTTARGET PITCH ELEV BCOR MCOR BEARINGL BEARING MARKL BOXCOLOR DIST DISTL RANGERL RANGER ACTUALX ACUTALY YAW TARGET1 L1 L2 LREM LR CHARGE1 CHARGE2 MULTIPLIER1 MULTIPLIER2 TEXT1 TEXT2 TEXT3 TEXT4 TEXT5 R1 R2 R3 R4 R5 R6 REMAINING
+@trigger 
+
+if (first())
+{
+LASERON = 1
+RANGER = 80
+#LEFT SCREEN#
+X=0
+X++
+E:egpRoundedBox(X,vec2(256,256),vec2(200,160))
+E:egpColor(X,vec(80,80,80))    
+X++
+E:egpRoundedBox(X,vec2(256,256),vec2(140,200))
+E:egpColor(X,vec(80,80,80))
+X++
+E:egpRoundedBox(X,vec2(256,360),vec2(75,40))
+E:egpColor(X,vec(80,80,80))
+X++
+E:egpRoundedBox(X,vec2(110,256),vec2(100,130))
+E:egpColor(X,vec(80,80,80))
+X++
+E:egpRoundedBox(X,vec2(405,256),vec2(100,130))
+E:egpColor(X,vec(80,80,80))
+X++
+TEXT1 = X
+E:egpCircle(X,vec2(256,262),vec2(250,140))
+E:egpColor(X,0,255,255,30*MULTIPLIER1)
+X++
+TEXT2 = X
+E:egpCircleOutline(X,vec2(256,262),vec2(250,140))
+E:egpColor(X,0,255,255,150*MULTIPLIER2)
+E:egpSize(X,9)
+E:egpFidelity(X,32)
+X++
+E:egpText(X,"SHIELD STRENGTH: ",vec2(12,10))
+E:egpSize(X,48)
+E:egpColor(X,vec(255,255,255))
+X++
+TEXT3 = X
+E:egpText(X,""+SHIELDSTR,vec2(425,10))
+E:egpSize(X,48)
+E:egpColor(X,vec(0,255,0))
+X++
+E:egpText(X,"SHIP CLOAKING: ",vec2(75,420))
+E:egpSize(X,48)
+E:egpColor(X,vec(255,255,255))
+X++
+TEXT4 = X
+E:egpText(X,"-ACTIVE-",vec2(140,460))
+E:egpSize(X,48)
+E:egpColor(X,vec(0,255,0))
+X++
+E:egpText(X,"HULL INTEGRITY: ",vec2(12,55))
+E:egpSize(X,48)
+E:egpColor(X,vec(255,255,255))
+X++
+TEXT5 = X
+E:egpText(X,"",vec2(385,55))
+E:egpSize(X,48)
+E:egpColor(X,vec(255,255,255))
+#RIGHT SCREEN#
+Y = 0
+Y++
+T:egpRoundedBox(Y,vec2(256,30),vec2(490,45))
+T:egpColor(Y,vec(70,70,70))
+Y++
+T:egpRoundedBox(Y,vec2(256,80),vec2(490,45))
+T:egpColor(Y,vec(70,70,70))
+Y++
+T:egpRoundedBox(Y,vec2(256,130),vec2(490,45))
+T:egpColor(Y,vec(70,70,70))
+Y++
+T:egpRoundedBox(Y,vec2(86,180),vec2(150,45))
+T:egpColor(Y,vec(70,70,70))
+Y++
+T:egpRoundedBox(Y,vec2(86,230),vec2(150,45))
+T:egpColor(Y,vec(70,70,70))
+Y++
+T:egpRoundedBox(Y,vec2(335,230),vec2(330,45))
+T:egpColor(Y,vec(70,70,70))
+Y++
+T:egpRoundedBox(Y,vec2(335,180),vec2(330,45))
+T:egpColor(Y,vec(70,70,70))
+Y++
+T:egpRoundedBox(Y,vec2(256,130),vec2(480,35))
+T:egpColor(Y,vec())
+Y++
+T:egpRoundedBox(Y,vec2(335,230),vec2(315,35))
+T:egpColor(Y,vec())
+Y++
+T:egpRoundedBox(Y,vec2(335,180),vec2(315,35))
+T:egpColor(Y,vec())
+Y++
+T:egpBoxOutline(Y,vec2(135,380),vec2(240,240))
+T:egpColor(Y,vec(100,100,100))
+T:egpSize(Y,5)
+Y++
+T:egpLine(Y,vec2(20,380),vec2(250,380))
+T:egpColor(Y,vec(0,255,0))
+Y++ 
+T:egpLine(Y,vec2(135,265),vec2(135,495))
+T:egpColor(Y,vec(0,255,0))
+Y++
+REMAINING = Y
+T:egpText(Y,"MISSLES REMAINING: ",vec2(30,114))
+T:egpSize(Y,30)
+T:egpColor(Y,vec(255,255,255))
+Y++
+LREM = Y
+T:egpText(Y,"REMAINING: ",vec2(190,164))
+T:egpSize(Y,30)
+T:egpColor(Y,vec(255,255,255))
+Y++
+CHARGE1 = Y
+T:egpText(Y,"CHARGE:   100",vec2(190,214))
+T:egpSize(Y,30)
+T:egpColor(Y,vec(255,255,255))
+Y++
+CHARGE2 = Y
+T:egpText(Y,"100",vec2(390,214))
+T:egpSize(Y,30)
+T:egpColor(Y,vec(255,255,255))
+
+J = 55
+for(I=0,5,1)
+{
+Y++ 
+T:egpRoundedBox(Y,vec2(J+25,30),vec2(65,35))
+T:egpColor(Y,vec())
+Y++
+I = I+1
+T:egpText(Y,"R"+I,vec2(J+6,11))
+T:egpColor(Y,vec(255,255,255))
+T:egpSize(Y,35)
+J = J+70
+}
+
+K = 55
+for(P=0,5,1)
+{
+Y++
+T:egpRoundedBox(Y,vec2(K+25,80),vec2(65,35))
+T:egpColor(Y,vec())
+K = K+70 
+}
+
+U = 25
+for(P=0,1,1)
+{
+Y++
+T:egpRoundedBox(Y,vec2(U+25,180),vec2(65,35))
+T:egpColor(Y,vec())
+Y++
+P = P+1
+T:egpText(Y,"L"+P,vec2(U+8,161))
+T:egpColor(Y,vec(255,255,255))
+T:egpSize(Y,35)
+U = U+70 
+}
+
+V = 25
+for(P=0,1,1)
+{
+Y++
+T:egpRoundedBox(Y,vec2(V+25,230),vec2(65,35))
+T:egpColor(Y,vec())
+Y++
+V = V+70 
+}
+
+Y++ R1 = Y T:egpText(Y,"",vec2(70,62))  T:egpColor(Y,vec(0,255,0)) T:egpSize(Y,35)
+Y++ R2 = Y T:egpText(Y,"",vec2(140,62)) T:egpColor(Y,vec(0,255,0)) T:egpSize(Y,35)
+Y++ R3 = Y T:egpText(Y,"",vec2(210,62)) T:egpColor(Y,vec(0,255,0)) T:egpSize(Y,35)
+Y++ R4 = Y T:egpText(Y,"",vec2(280,62)) T:egpColor(Y,vec(0,255,0)) T:egpSize(Y,35)
+Y++ R5 = Y T:egpText(Y,"",vec2(350,62)) T:egpColor(Y,vec(0,255,0)) T:egpSize(Y,35)
+Y++ R6 = Y T:egpText(Y,"",vec2(420,62)) T:egpColor(Y,vec(0,255,0)) T:egpSize(Y,35)
+Y++ L1 = Y T:egpText(Y,"Y",vec2(40,212)) T:egpColor(Y,vec(0,255,0)) T:egpSize(Y,35)
+Y++ L2 = Y T:egpText(Y,"Y",vec2(110,212)) T:egpColor(Y,vec(0,255,0)) T:egpSize(Y,35)
+Y++ T:egpCircle(Y,vec2(135,380),vec2(10,10)) T:egpColor(Y,vec(100,100,100))
+Y++ TARGET1 = Y T:egpCircle(Y,vec2(600,600),vec2(10,10)) T:egpColor(Y,vec(255,0,0))
+Y++ T:egpRoundedBox(Y,vec2(383,282),vec2(235,45)) T:egpColor(Y,vec(70,70,70))
+Y++ T:egpRoundedBox(Y,vec2(383,282),vec2(225,35)) T:egpColor(Y,vec())
+Y++ T:egpText(Y,"Range:",vec2(285,265)) T:egpSize(Y,30)
+Y++ RANGERL = Y T:egpText(Y,""+RANGER,vec2(380,265)) T:egpSize(Y,30)
+Y++ T:egpRoundedBox(Y,vec2(383,335),vec2(235,45)) T:egpColor(Y,vec(70,70,70))
+Y++ BOXCOLOR = Y T:egpRoundedBox(Y,vec2(383,335),vec2(225,35)) T:egpColor(Y,vec())
+Y++ T:egpText(Y,"Dist:",vec2(285,320)) T:egpSize(Y,30)
+Y++ DISTL = Y T:egpText(Y,""+DIST,vec2(350,320)) T:egpSize(Y,30)
+Y++ T:egpRoundedBox(Y,vec2(383,388),vec2(235,45)) T:egpColor(Y,vec(70,70,70))
+Y++ T:egpRoundedBox(Y,vec2(383,388),vec2(225,35)) T:egpColor(Y,vec())
+Y++ T:egpText(Y,"Bearing:",vec2(285,370)) T:egpSize(Y,30)
+Y++ BEARINGL = Y T:egpText(Y,"",vec2(395,370)) T:egpSize(Y,30)
+Y++ T:egpRoundedBox(Y,vec2(383,441),vec2(235,45)) T:egpColor(Y,vec(70,70,70))
+Y++ T:egpRoundedBox(Y,vec2(383,441),vec2(225,35)) T:egpColor(Y,vec())
+Y++ T:egpText(Y,"Mark:",vec2(285,425)) T:egpSize(Y,30)
+Y++ MARKL = Y T:egpText(Y,"",vec2(360,425)) T:egpSize(Y,30)
+
+Y++ T:egpRoundedBox(Y,vec2(383,489),vec2(235,40)) T:egpColor(Y,vec(70,70,70))
+Y++ T:egpRoundedBox(Y,vec2(383,489),vec2(225,30)) T:egpColor(Y,vec())
+Y++ T:egpText(Y,"B:",vec2(285,474)) T:egpSize(Y,30) T:egpColor(Y,vec(255,255,0))
+Y++ T:egpText(Y,"M:",vec2(392,474)) T:egpSize(Y,30) T:egpColor(Y,vec(255,255,0))
+Y++ BCOR = Y T:egpText(Y,"-000",vec2(315,474)) T:egpSize(Y,30) 
+Y++ MCOR = Y T:egpText(Y,"-000",vec2(425,474)) T:egpSize(Y,30)
+}
+
+interval(300)
+
+MCORRECT = -PITCH+ELEV
+
+T:egpSetText(RANGERL,""+RANGER)
+TARGETX = (TXPOS - XPOS) / RANGER
+TARGETY = (TYPOS - YPOS) / RANGER
+
+if (GOTTARGET == 1)
+{
+if (MOUSE1 == 1)
+{ FIREMISSLES = 1 MOUSE1 != MOUSE1} else {FIREMISSLES = 0}
+if (MOUSE2 == 1)
+{ FIRELASER = 1 MOUSE2 != MOUSE2} else {FIRELASER = 0}
+if (W == 1) {NEXTTARGET  = 1} else {NEXTTARGET = 0}
+if(-YAW+BEARING > 180)
+{BCORRECT = -(180 - (BEARING-(180+YAW)))} 
+if(-YAW+BEARING < -180)
+{BCORRECT = (180 + (BEARING + (180+-YAW)))}
+if(-YAW+BEARING < 180 && -YAW+BEARING > -180) 
+{BCORRECT = -YAW+BEARING}  
+T:egpColor(TARGET1,255,0,0,255) T:egpColor(BOXCOLOR,vec(0,125,0))
+T:egpSetText(DISTL,""+round(DIST))
+T:egpSetText(BEARINGL,""+floor(BEARING))
+T:egpSetText(MARKL,""+floor(ELEV))
+T:egpSetText(BCOR,""+floor(BCORRECT))
+T:egpSetText(MCOR,""+floor(MCORRECT)) 
+} 
+else
+{
+T:egpColor(TARGET1,255,0,0,0) T:egpPos(TARGET1,vec2(600,600)) 
+T:egpColor(BOXCOLOR,vec(125,0,0)) T:egpSetText(DISTL,"No Target")
+T:egpSetText(BEARINGL,"NONE")
+T:egpSetText(MARKL,"NONE")
+T:egpSetText(BCOR,"NO")
+T:egpSetText(MCOR,"NO")
+}
+
+if (380-TARGETX >= 265 && 135-TARGETY <= 245 && 380-TARGETX <= 495 && 135-TARGETY >= 20) 
+{T:egpPos(TARGET1,vec2(135-TARGETY,380-TARGETX)) ACTUALX = TARGETY ACTUALY = TARGETX}
+if (380-TARGETX <= 265)
+{T:egpPos(TARGET1,vec2(135-TARGETY,265)) ACTUALX = TARGETY ACTUALY = 115}
+if (380-TARGETX >= 495)
+{T:egpPos(TARGET1,vec2(135-TARGETY,495)) ACTUALX = TARGETY ACTUALY = -115}
+if (135-TARGETY <= 20)
+{T:egpPos(TARGET1,vec2(20,380-TARGETX)) ACTUALX = 115 ACTUALY = TARGETX}
+if (135-TARGETY >= 250) 
+{T:egpPos(TARGET1,vec2(250,380-TARGETX)) ACTUALX = -115 ACTUALY = TARGETX}
+
+T:egpAngle(TARGET1,vec2(135,380),vec2(ACTUALX,ACTUALY),-YAW)
+
+
+if (~R & R ) 
+{CLOAKONOFF = !CLOAKONOFF}
+
+if (~SPACE & SPACE ) 
+{ONOFF = !ONOFF}
+
+if(A == 1) {RANGER = RANGER -20}
+if (D == 1) {RANGER = RANGER +20}
+if (RANGER < 20) {RANGER = 20}
+if (RANGER > 500) {RANGER = 500}
+
+T:egpSetText(CHARGE1,"CHARGE:   "+round(LASER1))
+T:egpSetText(CHARGE2,""+round(LASER2))
+
+MR = floor(ENERGY/4800)
+if (ENERGY < 4800) {T:egpSetText(REMAINING,"MISSLES REMAINING:  0")}
+else {T:egpSetText(REMAINING,"MISSLES REMAINING:  "+MR)}
+
+LR = floor(ENERGY/1000) 
+if (ENERGY < 1000) {T:egpSetText(LREM,"REMAINING:  0")}
+else {T:egpSetText(LREM,"REMAINING:  "+LR)}
+
+if (ROCKET1 == 1 && ENERGY >= 4800) {T:egpSetText(R1,"Y") T:egpColor(R1,vec(0,255,0))} else {T:egpSetText(R1,"N") T:egpColor(R1,vec(255,0,0))}
+if (ROCKET2 == 1 && ENERGY >= 4800*2) {T:egpSetText(R2,"Y") T:egpColor(R2,vec(0,255,0))} else {T:egpSetText(R2,"N") T:egpColor(R2,vec(255,0,0))}
+if (ROCKET3 == 1 && ENERGY >= 4800*3) {T:egpSetText(R3,"Y") T:egpColor(R3,vec(0,255,0))} else {T:egpSetText(R3,"N") T:egpColor(R3,vec(255,0,0))}
+if (ROCKET4 == 1 && ENERGY >= 4800*4) {T:egpSetText(R4,"Y") T:egpColor(R4,vec(0,255,0))} else {T:egpSetText(R4,"N") T:egpColor(R4,vec(255,0,0))}
+if (ROCKET5 == 1 && ENERGY >= 4800*5) {T:egpSetText(R5,"Y") T:egpColor(R5,vec(0,255,0))} else {T:egpSetText(R5,"N") T:egpColor(R5,vec(255,0,0))}
+if (ROCKET6 == 1 && ENERGY >= 4800*6) {T:egpSetText(R6,"Y") T:egpColor(R6,vec(0,255,0))} else {T:egpSetText(R6,"N") T:egpColor(R6,vec(255,0,0))}
+
+if (LASER1 == 100 && ENERGY >= 1000) {T:egpSetText(L1,"Y") T:egpColor(L1,vec(0,255,0))} else {T:egpSetText(L1,"N") T:egpColor(L1,vec(255,0,0))}
+if (LASER2 == 100 && ENERGY >= 1000*2) {T:egpSetText(L2,"Y") T:egpColor(L2,vec(0,255,0))} else {T:egpSetText(L2,"N") T:egpColor(L2,vec(255,0,0))}
+
+
+HEALTHPERCENT = round((HEALTH/MAXHEALTH)*100)
+E:egpSetText(TEXT5,""+HEALTHPERCENT)
+if (HEALTHPERCENT >= 75) {E:egpColor(TEXT5,vec(0,255,0))}
+if (HEALTHPERCENT < 75 && HEALTHPERCENT >= 35) {E:egpColor(TEXT5,vec(255,255,0))}
+if (HEALTHPERCENT < 35) {E:egpColor(TEXT5,vec(255,0,0))}
+
+if (ENERGY < 1000)
+{
+ONOFF = 0
+CLOAKONOFF = 0   
+}
+if (SHIELDING == 1)
+{
+MULTIPLIER1 = (SHIELDSTR/100)
+MULTIPLIER2 = (SHIELDSTR/100)
+E:egpSetText(TEXT3,""+SHIELDSTR)
+E:egpColor(TEXT3,vec(0,255,0))
+}
+if (SHIELDING == 0)
+{
+MULTIPLIER1 = 0
+MULTIPLIER2 = 0   
+E:egpSetText(TEXT3,"OFF")
+E:egpColor(TEXT3,vec(255,0,0))
+}
+if (SHIELDSTR < 20)
+{
+MULTIPLIER2 = 0  
+}
+
+E:egpColor(TEXT2,0,255,255,100*MULTIPLIER2)
+E:egpColor(TEXT1,0,255,255,30*MULTIPLIER1)
+
+if (CLOAKING == 1)
+{
+E:egpSetText(TEXT4,"-ACTIVE-")
+E:egpColor(TEXT4,vec(0,255,0))   
+}
+else 
+{
+E:egpSetText(TEXT4,"-OFFLINE-")
+E:egpColor(TEXT4,vec(255,0,0))
+}
