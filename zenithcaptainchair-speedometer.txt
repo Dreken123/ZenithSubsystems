@@ -1,0 +1,256 @@
+@name ZenithCaptainChair-Speedometer
+@inputs RKey FreezeKey L:wirelink R:wirelink T:wirelink PropReference:wirelink AltitudeReference:wirelink
+@outputs ONOFF MULTIPITCHYAW MULTIROLL MAXSPEED MULTISPEED FREEZE XPOS YPOS ZPOS
+@persist ONOFF XPOS YPOS ZPOS POSITION TEXT1 TEXT2 TEXT3 TEXT4 RKey FREEZE Axis Text UseMPH FULLSTOP1 MANUAL1
+
+MULTIPITCHYAW = 0.05
+MULTIROLL = 0.08
+MULTISPEED = 6
+MAXSPEED = 70
+
+if (first())
+{
+ONOFF = 0
+FREEZE = 0
+# LEFT SCREEN #
+X=0
+X++
+L:egpText(X,"POSITIONING",vec2(10,0))
+L:egpSize(X,82)   
+X++
+L:egpRoundedBox(X,vec2(256,290),vec2(470,410))
+L:egpColor(X,vec(60,60,60)) 
+X++
+L:egpRoundedBox(X,vec2(75,140),vec2(100,100))
+L:egpColor(X,vec())
+X++
+L:egpRoundedBox(X,vec2(75,245),vec2(100,100))
+L:egpColor(X,vec()) 
+X++
+L:egpRoundedBox(X,vec2(75,350),vec2(100,100))
+L:egpColor(X,vec())
+X++
+L:egpRoundedBox(X,vec2(75,450),vec2(85,80))
+L:egpColor(X,vec())
+X++
+L:egpRoundedBox(X,vec2(310,140),vec2(355,100))
+L:egpColor(X,vec())
+X++
+L:egpRoundedBox(X,vec2(310,245),vec2(355,100))
+L:egpColor(X,vec()) 
+X++
+L:egpRoundedBox(X,vec2(310,350),vec2(355,100))
+L:egpColor(X,vec()) 
+X++
+L:egpRoundedBox(X,vec2(310,450),vec2(355,80))
+L:egpColor(X,vec())
+X++
+L:egpText(X,"X",vec2(38,72))
+L:egpColor(X,vec(255,255,255))
+L:egpSize(X,130)
+X++
+L:egpText(X,"Y",vec2(38,180))
+L:egpColor(X,vec(255,255,255))
+L:egpSize(X,130)
+X++
+L:egpText(X,"Z",vec2(38,282))
+L:egpColor(X,vec(255,255,255))
+L:egpSize(X,130)
+X++
+L:egpText(X,"A",vec2(42,391))
+L:egpColor(X,vec(255,255,255))
+L:egpSize(X,110)
+X++
+TEXT1 = X
+L:egpText(X,""+XPOS,vec2(140,100))
+L:egpColor(X,vec(255,255,255))
+L:egpSize(X,75)
+X++
+TEXT2 = X
+L:egpText(X,""+YPOS,vec2(140,208))
+L:egpColor(X,vec(255,255,255))
+L:egpSize(X,75)
+X++
+TEXT3 = X
+L:egpText(X,""+ZPOS,vec2(140,310))
+L:egpColor(X,vec(255,255,255))
+L:egpSize(X,75)
+X++
+TEXT4 = X
+L:egpText(X,"",vec2(140,410))
+L:egpColor(X,vec(255,255,255))
+L:egpSize(X,75)
+#holoCreate(15)
+
+# RIGHT SCREEN #
+Y=0
+Y++
+R:egpBox(Y,vec2(256,256),vec2(512,512))
+R:egpColor(Y,vec(40,40,40))
+#Circle background
+Y++
+R:egpCircle(Y,vec2(256,256),vec2(230,230))
+R:egpColor(Y,vec(165,35,35))
+#Circle outline
+Y++
+R:egpCircleOutline(Y,vec2(256,256),vec2(240,240))
+R:egpSize(Y,25)
+R:egpColor(Y,vec())
+R:egpFidelity(Y,36)
+Y++
+R:egpCircleOutline(Y,vec2(256,256),vec2(240,240))
+R:egpSize(Y,25)
+R:egpAngle(Y,45)
+R:egpColor(Y,vec())
+R:egpFidelity(Y,36)
+#Create all the numbers and lines
+J=0
+for(I=1,50,1)
+{
+J++
+
+#For making every third element slightly larger
+IsThird = (J%5) == 0
+
+#Calculate angle for position
+Angle = I/50*270-45
+
+#Give the larger texts a little offset
+Offset = 0
+if (IsThird) 
+{
+    Offset = 5
+} else {Offset = -25}
+Pos = vec2(256,256) - vec2(175-Offset,0):rotate(Angle)
+#Create text
+Y++
+R:egpText(Y,""+I,Pos)
+R:egpAlign(Y,1,1)
+R:egpSize(Y,( IsThird ? 35 : 15 ))
+R:egpColor(Y,vec())
+#Create line
+Y++
+LinePos1 = vec2(256,256) - vec2(240,0):rotate(Angle)
+LinePos2 = vec2(256,256) - vec2(190 + (!IsThird ? 20 : 0),0):rotate(Angle)
+R:egpLine(Y,LinePos1,LinePos2)
+R:egpSize(Y,(IsThird ? 10 : 5))
+R:egpColor(Y,vec())
+}   
+#Arrow
+Y++
+R:egpLine(Y,vec2(200,0),-vec2(20,0))
+R:egpSize(Y,5)
+R:egpColor(Y,vec())
+#Center axis circle
+Y++
+Axis = Y
+R:egpCircle(Y,vec2(256,256),vec2(10,10))
+R:egpColor(Y,vec())
+#Parent the arrow to the axis
+R:egpParent(Y-1,Y)
+Y++
+Text = Y
+R:egpText(Y,("MPH: 0"),vec2(160,400))
+R:egpColor(Y,vec())
+R:egpSize(Y,40)
+
+#THIRD SCREEN#
+P = 0
+P++
+T:egpText(P,"MANUAL CONTROL:",vec2(7,25))
+T:egpSize(P,60)
+T:egpColor(P,vec(255,255,255))
+P++
+MANUAL1 = P
+T:egpText(P,"ENABLED",vec2(5,85))
+T:egpSize(P,130)
+T:egpColor(P,vec(0,255,0))
+P++
+T:egpText(P,"FULL STOP:",vec2(110,295))
+T:egpSize(P,60)
+T:egpColor(P,vec(255,255,255))
+P++
+FULLSTOP1 = P
+T:egpText(P,"ENABLED",vec2(5,350))
+T:egpSize(P,130)
+T:egpColor(P,vec(0,255,0))
+P++
+T:egpRoundedBox(P,vec2(256,250),vec2(490,40))
+T:egpColor(P,vec(90,90,90))
+}
+
+interval(130)
+
+if (ONOFF == 1)
+{
+T:egpSetText(MANUAL1,"ENABLED")
+T:egpPos(MANUAL1,vec2(5,85))
+T:egpColor(MANUAL1,vec(0,255,0))   
+}
+if (ONOFF == 0)
+{
+T:egpSetText(MANUAL1,"OFFLINE")
+T:egpPos(MANUAL1,vec2(20,85))
+T:egpColor(MANUAL1,vec(255,0,0))   
+}
+if (FREEZE == 1)
+{
+T:egpSetText(FULLSTOP1,"ENABLED")
+T:egpPos(FULLSTOP1,vec2(5,350))
+T:egpColor(FULLSTOP1,vec(0,255,0))   
+}
+if (FREEZE == 0)
+{
+T:egpSetText(FULLSTOP1,"OFFLINE")
+T:egpPos(FULLSTOP1,vec2(20,350))
+T:egpColor(FULLSTOP1,vec(255,0,0))   
+}
+
+#Get miles per hour
+Vel = AltitudeReference:entity():vel():length()
+MPH = floor(toUnit("mph",Vel))
+
+if (Vel > 0) 
+{
+    #Calculate angle of arrow
+    Vel2 = clamp(round(MPH),0,50)
+    Angle = 225-Vel2/50*270
+    R:egpAngle(Axis,Angle)
+    if (MPH == 0) {R:egpSetText(Text,"MPH: 0")} else {
+    R:egpSetText(Text,"MPH: "+MPH) }
+}
+
+XPOS = round(PropReference:entity():pos():x())
+YPOS = round(PropReference:entity():pos():y())
+ZPOS = round(PropReference:entity():pos():z())
+
+Rangerstart = vec(AltitudeReference:entity():pos():x(),AltitudeReference:entity():pos():y(),AltitudeReference:entity():pos():z()-202)
+
+Ranger = rangerOffset(2500,Rangerstart,AltitudeReference:entity():up()*(-1))
+
+#holoPos(15,Ranger:position())
+
+ALTITUDE = round(Ranger:distance())
+
+L:egpSetText(TEXT1,""+XPOS)
+L:egpSetText(TEXT2,""+YPOS)
+L:egpSetText(TEXT3,""+ZPOS)
+
+if (ALTITUDE < 20 && ALTITUDE > 1)
+{L:egpSetText(TEXT4,"CONTACT")}
+if (ALTITUDE >= 2499)
+{L:egpSetText(TEXT4," > 2 5 0 0")}
+if (ALTITUDE > 20 && ALTITUDE < 2499)
+{L:egpSetText(TEXT4,""+ALTITUDE)}
+if (ALTITUDE < 1 || ALTITUDE == 0)
+{L:egpSetText(TEXT4,"NOT LEVEL")}
+
+if (~RKey & RKey ) 
+{    
+    ONOFF = !ONOFF   
+}
+
+if (~FreezeKey & FreezeKey ) 
+{    
+    FREEZE = !FREEZE   
+}
