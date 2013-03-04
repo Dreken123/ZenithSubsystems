@@ -1,0 +1,244 @@
+@name Zenith Jump Drive Computer
+@inputs User:entity E:wirelink JUMPBUTTON 
+@outputs X Y Z JUMP SOUND
+
+SOUND = 1
+
+if (first())
+{
+E:egpTextLayout(1,"JUMP DRIVE COMPUTER",vec2(3,2),vec2(3000,50))
+E:egpSize(1,50)
+
+E:egpRoundedBox(2,vec2(255,275),vec2(500,450))
+E:egpColor(2,vec(69,69,69))
+
+E:egpBox(10,vec2(75,150),vec2(75,50))
+E:egpColor(10,vec(0,255,0))
+E:egpBox(11,vec2(175,150),vec2(75,50)) 
+E:egpColor(11,vec(255,0,0))
+E:egpBox(12,vec2(275,150),vec2(75,50)) 
+E:egpColor(12,vec(0,255,0))
+E:egpBox(13,vec2(375,150),vec2(75,50)) 
+E:egpColor(13,vec(255,0,0))
+
+E:egpBox(14,vec2(75,290),vec2(75,50))
+E:egpColor(14,vec(0,255,0))
+E:egpBox(15,vec2(175,290),vec2(75,50)) 
+E:egpColor(15,vec(255,0,0))
+E:egpBox(16,vec2(275,290),vec2(75,50)) 
+E:egpColor(16,vec(0,255,0))
+E:egpBox(17,vec2(375,290),vec2(75,50)) 
+E:egpColor(17,vec(255,0,0))
+
+E:egpBox(18,vec2(75,430),vec2(75,50))
+E:egpColor(18,vec(0,255,0))
+E:egpBox(19,vec2(175,430),vec2(75,50)) 
+E:egpColor(19,vec(255,0,0))
+E:egpBox(20,vec2(275,430),vec2(75,50)) 
+E:egpColor(20,vec(0,255,0))
+E:egpBox(21,vec2(375,430),vec2(75,50)) 
+E:egpColor(21,vec(255,0,0))
+
+E:egpTextLayout(22,"+1000", vec2(40,135),vec2(500,25))
+E:egpColor(22,vec(0,0,0))
+E:egpSize(22,25)
+E:egpTextLayout(23,"-1000", vec2(145,135),vec2(500,25))
+E:egpColor(23,vec(0,0,0))
+E:egpSize(23,25)
+E:egpTextLayout(24,"+100", vec2(245,135),vec2(500,25))
+E:egpColor(24,vec(0,0,0))
+E:egpSize(24,25)
+E:egpTextLayout(25,"-100", vec2(350,135),vec2(500,25))
+E:egpColor(25,vec(0,0,0))
+E:egpSize(25,25)
+
+E:egpTextLayout(26,"+1000", vec2(40,275),vec2(500,25))
+E:egpColor(26,vec(0,0,0))
+E:egpSize(26,25)
+E:egpTextLayout(27,"-1000", vec2(145,275),vec2(500,25))
+E:egpColor(27,vec(0,0,0))
+E:egpSize(27,25)
+E:egpTextLayout(28,"+100", vec2(245,275),vec2(500,25))
+E:egpColor(28,vec(0,0,0))
+E:egpSize(28,25)
+E:egpTextLayout(29,"-100", vec2(350,275),vec2(500,25))
+E:egpColor(29,vec(0,0,0))
+E:egpSize(29,25)
+
+E:egpTextLayout(30,"+1000", vec2(40,415),vec2(500,25))
+E:egpColor(30,vec(0,0,0))
+E:egpSize(30,25)
+E:egpTextLayout(31,"-1000", vec2(145,415),vec2(500,25))
+E:egpColor(31,vec(0,0,0))
+E:egpSize(31,25)
+E:egpTextLayout(32,"+100", vec2(245,415),vec2(500,25))
+E:egpColor(32,vec(0,0,0))
+E:egpSize(32,25)
+E:egpTextLayout(33,"-100", vec2(350,415),vec2(500,25))
+E:egpColor(33,vec(0,0,0))
+E:egpSize(33,25)
+
+E:egpBox(34,vec2(465,150),vec2(50,50))
+E:egpColor(34,vec(0,255,255))
+E:egpBox(35,vec2(465,290),vec2(50,50))
+E:egpColor(35,vec(0,255,255))
+E:egpBox(36,vec2(465,430),vec2(50,50))
+E:egpColor(36,vec(0,255,255))
+
+E:egpTextLayout(37,"R", vec2(450,120),vec2(500,55))
+E:egpColor(37,vec(0,0,0))
+E:egpSize(37,55)
+E:egpTextLayout(38,"R", vec2(450,260),vec2(500,55))
+E:egpColor(38,vec(0,0,0))
+E:egpSize(38,55)
+E:egpTextLayout(39,"R", vec2(450,400),vec2(500,55))
+E:egpColor(39,vec(0,0,0))
+E:egpSize(39,55)
+
+
+E:egpTextLayout(3,"X POS: " +X, vec2(25,60),vec2(3000,50))
+E:egpSize(3,50)
+
+E:egpTextLayout(4,"Y POS: " +Y, vec2(25,200),vec2(3000,50))
+E:egpSize(4,50)
+
+E:egpTextLayout(5,"Z POS: " +Z, vec2(25,340),vec2(3000,50))
+E:egpSize(5,50)
+
+}
+
+interval(150)
+
+E:egpSetText(3,"X POS: "+X)
+E:egpSetText(4,"Y POS: "+Y)
+E:egpSetText(5,"Z POS: "+Z)
+
+if (JUMPBUTTON == 1)
+{
+JUMP = !JUMP   
+}
+
+if (~User & User) 
+    { #if someone clicked Use on the screen #Get positions
+        
+    local V = E:egpCursor(User)
+    local MinCorner1 = E:egpPos(10) - E:egpSize(10)/2
+    local MaxCorner1 = E:egpPos(10) + E:egpSize(10)/2
+    local MinCorner2 = E:egpPos(11) - E:egpSize(11)/2
+    local MaxCorner2 = E:egpPos(11) + E:egpSize(11)/2
+    local MinCorner3 = E:egpPos(12) - E:egpSize(12)/2
+    local MaxCorner3 = E:egpPos(12) + E:egpSize(12)/2
+    local MinCorner4 = E:egpPos(13) - E:egpSize(13)/2
+    local MaxCorner4 = E:egpPos(13) + E:egpSize(13)/2
+    
+    local MinCorner5 = E:egpPos(14) - E:egpSize(14)/2
+    local MaxCorner5 = E:egpPos(14) + E:egpSize(14)/2
+    local MinCorner6 = E:egpPos(15) - E:egpSize(15)/2
+    local MaxCorner6 = E:egpPos(15) + E:egpSize(15)/2
+    local MinCorner7 = E:egpPos(16) - E:egpSize(16)/2
+    local MaxCorner7 = E:egpPos(16) + E:egpSize(16)/2
+    local MinCorner8 = E:egpPos(17) - E:egpSize(17)/2
+    local MaxCorner8 = E:egpPos(17) + E:egpSize(17)/2
+    
+    local MinCorner9 = E:egpPos(18) - E:egpSize(18)/2
+    local MaxCorner9 = E:egpPos(18) + E:egpSize(18)/2
+    local MinCorner10 = E:egpPos(19) - E:egpSize(19)/2
+    local MaxCorner10 = E:egpPos(19) + E:egpSize(19)/2
+    local MinCorner11 = E:egpPos(20) - E:egpSize(20)/2
+    local MaxCorner11 = E:egpPos(20) + E:egpSize(20)/2
+    local MinCorner12 = E:egpPos(21) - E:egpSize(21)/2
+    local MaxCorner12 = E:egpPos(21) + E:egpSize(21)/2
+    
+     local MinCorner34 = E:egpPos(34) - E:egpSize(34)/2
+    local MaxCorner34 = E:egpPos(34) + E:egpSize(34)/2
+     local MinCorner35 = E:egpPos(35) - E:egpSize(35)/2
+    local MaxCorner35 = E:egpPos(35) + E:egpSize(35)/2
+     local MinCorner36 = E:egpPos(36) - E:egpSize(36)/2
+    local MaxCorner36 = E:egpPos(36) + E:egpSize(36)/2
+
+    if (inrange(V,MinCorner1,MaxCorner1))
+        { #Compare positions      
+            soundPlay(4,0,"/buttons/button15.wav")
+            X = X+1000
+        }  
+    if (inrange(V,MinCorner2,MaxCorner2))
+        { #Compare positions
+            soundPlay(4,0,"/buttons/button15.wav")
+            X = X-1000
+        }
+    if (inrange(V,MinCorner3,MaxCorner3))
+        { #Compare positions      
+            soundPlay(4,0,"/buttons/button15.wav")
+            X = X+100
+        }  
+    if (inrange(V,MinCorner4,MaxCorner4))
+        { #Compare positions
+            soundPlay(4,0,"/buttons/button15.wav")
+            X = X-100
+        }
+    
+    #______________________#
+    
+    if (inrange(V,MinCorner5,MaxCorner5))
+        { #Compare positions      
+            soundPlay(4,0,"/buttons/button15.wav")
+            Y = Y+1000
+        }  
+    if (inrange(V,MinCorner6,MaxCorner6))
+        { #Compare positions
+            soundPlay(4,0,"/buttons/button15.wav")
+            Y = Y-1000
+        }
+    if (inrange(V,MinCorner7,MaxCorner7))
+        { #Compare positions      
+            soundPlay(4,0,"/buttons/button15.wav")
+            Y = Y+100
+        }  
+    if (inrange(V,MinCorner8,MaxCorner8))
+        { #Compare positions
+            soundPlay(4,0,"/buttons/button15.wav")
+            Y = Y-100
+        }
+        
+    #___________________#
+    
+    if (inrange(V,MinCorner9,MaxCorner9))
+        { #Compare positions      
+            soundPlay(4,0,"/buttons/button15.wav")
+            Z = Z+1000
+        }  
+    if (inrange(V,MinCorner10,MaxCorner10))
+        { #Compare positions
+            soundPlay(4,0,"/buttons/button15.wav")
+            Z = Z-1000
+        }
+    if (inrange(V,MinCorner11,MaxCorner11))
+        { #Compare positions      
+            soundPlay(4,0,"/buttons/button15.wav")
+            Z = Z+100
+        }  
+    if (inrange(V,MinCorner12,MaxCorner12))
+        { #Compare positions
+            soundPlay(4,0,"/buttons/button15.wav")
+            Z = Z-100
+        }
+        
+    #_______________________# RESET BUTTONS
+    
+    if (inrange(V,MinCorner34,MaxCorner34))
+        { #Compare positions
+            soundPlay(4,0,"/buttons/button15.wav")
+            X = 0
+        }
+    if (inrange(V,MinCorner35,MaxCorner35))
+        { #Compare positions      
+            soundPlay(4,0,"/buttons/button15.wav")
+            Y = 0
+        }  
+    if (inrange(V,MinCorner36,MaxCorner36))
+        { #Compare positions
+            soundPlay(4,0,"/buttons/button15.wav")
+            Z = 0
+        }
+        
+    }
